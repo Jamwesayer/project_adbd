@@ -13,16 +13,17 @@ namespace ProjectWebsite.Controllers
 	public class HomeController : Controller
 	{
 
-		public static string ConnectionString = "Data Source=JAMES\\SQLEXPRESS01;Initial Catalog=OutdoorParadise;Integrated Security=True";
-		SqlConnection Connection = new SqlConnection(ConnectionString);
+		private readonly OutdoorParadiseContext _context;
+
+		public HomeController(OutdoorParadiseContext context)
+		{
+			_context = context;
+		}
 
 		public IActionResult Index()
 		{
-			using(OutdoorParadiseContext Context = new OutdoorParadiseContext())
-			{
-				var Employees = Context.Employee.ToList();
-				return View(Employees);
-			}
+			var Employees = _context.Employee.ToList();
+			return View(Employees);
 		}
 
 		public IActionResult CreateTrip()

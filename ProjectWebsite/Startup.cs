@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectWebsite.Models;
 
 namespace ProjectWebsite
 {
@@ -31,6 +33,8 @@ namespace ProjectWebsite
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
 
+			services.AddDbContext<OutdoorParadiseContext>(options =>
+				options.UseSqlServer(Configuration.GetConnectionString("ProjectDB")));
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}
