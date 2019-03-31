@@ -1,0 +1,48 @@
+@model ProjectWebsite.Models.Booking
+
+@{
+    ViewData["Title"] = "Booking";
+}
+
+<h2>Booking</h2>
+
+<h4>Booking</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Booking">
+            <div class="form-group">
+
+            </div>
+			<div class="form-group">
+				@Html.DropDownList("CustomerId", (ViewBag.Customers as List<ProjectWebsite.Models.Customer>).Select(m => new SelectListItem { Value = m.CustId.ToString(), Text = m.Fname + " " + m.Lname }), "Select a customer")
+			</div>
+			<div class="form-group">
+				@Html.DropDownList("SportTripId", (ViewBag.SportTrips as List<ProjectWebsite.Models.SportTrip>).Select(m => new SelectListItem { Value = m.TripId.ToString(), Text = m.TripName }), "Select a sport trip")
+			</div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Insurance" /> @Html.DisplayNameFor(model => model.Insurance)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentMethod" class="control-label"></label>
+                <input required asp-for="PaymentMethod" class="form-control" />
+                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

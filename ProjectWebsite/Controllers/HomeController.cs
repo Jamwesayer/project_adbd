@@ -26,30 +26,37 @@ namespace ProjectWebsite.Controllers
 			return View(Employees);
 		}
 
-		public IActionResult CreateTrip()
+		[HttpGet]
+		public IActionResult Booking()
 		{
-			ViewData["Message"] = "Your application description page.";
+
+			var Customers = _context.Customer.ToList();
+			var SportTrips = _context.SportTrip.ToList();
+
+			ViewBag.Customers = Customers;
+			ViewBag.SportTrips = SportTrips;
 
 			return View();
 		}
 
-		public IActionResult Employees()
+		[HttpPost]
+		public IActionResult Booking(int CustomerId, int SportTripId, bool HasInsurance, string PaymentMethod)
 		{
-			
-			ViewData["Message"] = "Your contact page.";
 
-			return View();
-		}
+			DateTime CurrentTimeStamp = DateTime.Now;
 
-		public IActionResult Privacy()
-		{
-			return View();
-		}
+			_context.Booking.Add(new Models.Booking()
+			{
+				CustomerId = CustomerId,
+				TripId = SportTripId,
+				Bookingdate = CurrentTimeStamp,
+				Insurance = HasInsurance,
+				PaymentMethod = PaymentMethod
+			});
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+			_context.SaveChanges();
+
+			return RedirectToAction("index");
 		}
 	}
 }
