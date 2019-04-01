@@ -34,7 +34,7 @@ namespace ProjectWebsite
 			});
 
 			services.AddDbContext<OutdoorParadiseContext>(options =>
-				options.UseSqlServer(Configuration.GetConnectionString("ProjectDB")));
+				options.UseSqlServer(Configuration.GetConnectionString("ProjectDBJurian")));
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}
